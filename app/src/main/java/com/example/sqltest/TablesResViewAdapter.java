@@ -17,18 +17,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class TablesResViewAdapter extends RecyclerView.Adapter<TablesResViewAdapter.ViewHolder> {
-    private ArrayList<String> items = new ArrayList<>();
-    private boolean isNested;
+    private final ArrayList<String> items = new ArrayList<>();
+    private final boolean isNested;
 
     public TablesResViewAdapter(boolean isNested) {
         this.isNested=isNested;
     }
 
+    @NonNull
     @Override
     public TablesResViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.table_list_item,parent,false);
-        TablesResViewAdapter.ViewHolder holder = new TablesResViewAdapter.ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -52,50 +52,41 @@ public class TablesResViewAdapter extends RecyclerView.Adapter<TablesResViewAdap
         holder.itemName.setText(items.get(position));
         if(!isNested && position!=0) {
             holder.addButton.setVisibility(View.VISIBLE);
-            holder.itemHolder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (holder.tableDataRecView.getVisibility() == View.VISIBLE) {
-                        holder.tableDataRecView.setVisibility(View.GONE);
-                    } else {
-                        holder.tableDataRecView.setVisibility(View.VISIBLE);
+            holder.itemHolder.setOnClickListener(view -> {
+                if (holder.tableDataRecView.getVisibility() == View.VISIBLE) {
+                    holder.tableDataRecView.setVisibility(View.GONE);
+                } else {
+                    holder.tableDataRecView.setVisibility(View.VISIBLE);
 
-                        TablesResViewAdapter tablesResViewAdapter = new TablesResViewAdapter(true);
-                        holder.tableDataRecView.setAdapter(tablesResViewAdapter);
-                        holder.tableDataRecView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                        try {
-                            ArrayList<String> rs = OracleCon.createQuery("SELECT * FROM " + holder.itemName.getText().toString().toLowerCase());
-                            if (rs.size() >= 1)
-                                tablesResViewAdapter.setItems(rs);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-            holder.addButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(holder.addNewItem.getVisibility()==View.VISIBLE){
-                        holder.addNewItem.setVisibility(View.GONE);
-                    }else{
-                        holder.addNewItem.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-            holder.buttAddNew.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                    TablesResViewAdapter tablesResViewAdapter = new TablesResViewAdapter(true);
+                    holder.tableDataRecView.setAdapter(tablesResViewAdapter);
+                    holder.tableDataRecView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                     try {
-                        ArrayList<String> rs = OracleCon.createQuery("INSERT INTO " + holder.itemName.getText().toString().toLowerCase()+
-                                "VALUES ("+holder.edtTxtAddNew.getText().toString()+")");
-                        Log.e("TEXT","INSERT INTO " + holder.itemName.getText().toString().toLowerCase()+"VALUES ("+holder.edtTxtAddNew.getText().toString()+")");
+                        ArrayList<String> rs = OracleCon.createQuery("SELECT * FROM " + holder.itemName.getText().toString().toLowerCase());
+                        if (rs.size() >= 1)
+                            tablesResViewAdapter.setItems(rs);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    holder.addNewItem.setVisibility(View.GONE);
-                    holder.edtTxtAddNew.setText("");
                 }
+            });
+            holder.addButton.setOnClickListener(view -> {
+                if(holder.addNewItem.getVisibility()==View.VISIBLE){
+                    holder.addNewItem.setVisibility(View.GONE);
+                }else{
+                    holder.addNewItem.setVisibility(View.VISIBLE);
+                }
+            });
+            holder.buttAddNew.setOnClickListener(view -> {
+                try {
+                    OracleCon.createQuery("INSERT INTO " + holder.itemName.getText().toString().toLowerCase() +
+                            "VALUES (" + holder.edtTxtAddNew.getText().toString() + ")");
+                    Log.e("TEXT","INSERT INTO " + holder.itemName.getText().toString().toLowerCase()+"VALUES ("+holder.edtTxtAddNew.getText().toString()+")");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                holder.addNewItem.setVisibility(View.GONE);
+                holder.edtTxtAddNew.setText("");
             });
         }
     }
@@ -105,15 +96,15 @@ public class TablesResViewAdapter extends RecyclerView.Adapter<TablesResViewAdap
         return items.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView itemName;
-        private ConstraintLayout itemHolder;
-        private RecyclerView tableDataRecView;
-        private ImageView addButton;
-        private ConstraintLayout addNewItem;
-        private Button buttAddNew;
-        private EditText edtTxtAddNew;
-        private ImageView removeButton;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView itemName;
+        private final ConstraintLayout itemHolder;
+        private final RecyclerView tableDataRecView;
+        private final ImageView addButton;
+        private final ConstraintLayout addNewItem;
+        private final Button buttAddNew;
+        private final EditText edtTxtAddNew;
+        private final ImageView removeButton;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.itemName);

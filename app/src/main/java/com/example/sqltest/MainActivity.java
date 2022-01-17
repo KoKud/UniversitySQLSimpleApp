@@ -41,27 +41,21 @@ public class MainActivity extends AppCompatActivity {
         Button button = findViewById(R.id.acceptButton);
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingNewStatement);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(constraintLayout.getVisibility()==View.VISIBLE){
-                    constraintLayout.setVisibility(View.GONE);
-                }else{
-                    constraintLayout.setVisibility(View.VISIBLE);
-                }
+        floatingActionButton.setOnClickListener(view -> {
+            if(constraintLayout.getVisibility()==View.VISIBLE){
+                constraintLayout.setVisibility(View.GONE);
+            }else{
+                constraintLayout.setVisibility(View.VISIBLE);
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    ArrayList<String> rs = OracleCon.createQuery(editText.getText().toString());
-                    Log.i("QUERY",editText.getText().toString());
-                    editText.setText("");
-                    constraintLayout.setVisibility(View.GONE);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        button.setOnClickListener(view -> {
+            try {
+                OracleCon.createQuery(editText.getText().toString());
+                Log.i("QUERY",editText.getText().toString());
+                editText.setText("");
+                constraintLayout.setVisibility(View.GONE);
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
     }
