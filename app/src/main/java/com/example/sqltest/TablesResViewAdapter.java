@@ -35,6 +35,7 @@ public class TablesResViewAdapter extends RecyclerView.Adapter<TablesResViewAdap
     public void onBindViewHolder(@NonNull TablesResViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if(position==0) {
             holder.removeButton.setVisibility(View.GONE);
+            holder.addButton.setVisibility(View.GONE);
             holder.itemHolder.setBackgroundColor(ContextCompat.getColor(holder.itemHolder.getContext(), R.color.purple_200));
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)holder.itemHolder.getLayoutParams();
             params.setMargins(0,0,0,0);
