@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemHolder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/teal_200"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<TextView
+    android:id="@+id/itemName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="TABLE NAME"
+    android:textSize="20sp"
+    android:fontFamily="casual"
+    android:padding="10dp"
+
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+<ImageView
+    android:id="@+id/addButton"
+    android:visibility="gone"
+    android:layout_width="50dp"
+    android:layout_height="0dp"
+    android:src="@drawable/ic_baseline_add_24"
+    app:layout_constraintBottom_toBottomOf="@id/itemName"
+    app:layout_constraintTop_toTopOf="@id/itemName"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/removeButton"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:layout_constraintBottom_toBottomOf="@id/itemName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/itemName" />
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/addNewItem"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/itemName">
+
+        <EditText
+            android:id="@+id/edtTxtAddNew"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:hint="values for all "
+            app:layout_constraintEnd_toStartOf="@+id/buttAddNew"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttAddNew"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="OK"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tableDataRecView"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+
+            app:layout_constraintTop_toBottomOf="@id/addNewItem"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
