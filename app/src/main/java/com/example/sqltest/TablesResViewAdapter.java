@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class TablesResViewAdapter extends RecyclerView.Adapter<TablesResViewAdapter.ViewHolder> {
+    static ConstraintLayout removeCL;
+    static Button removeBtn;
     private final ArrayList<String> items = new ArrayList<>();
     private final boolean isNested;
 
@@ -42,7 +44,7 @@ public class TablesResViewAdapter extends RecyclerView.Adapter<TablesResViewAdap
             holder.itemHolder.setLayoutParams(params);
         }else{
             holder.removeButton.setVisibility(View.VISIBLE);
-            holder.itemHolder.setBackgroundColor(ContextCompat.getColor(holder.itemHolder.getContext(), R.color.teal_200));
+            //holder.itemHolder.setBackgroundColor(ContextCompat.getColor(holder.itemHolder.getContext(), R.color.teal_200));
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)holder.itemHolder.getLayoutParams();
             params.setMargins(10,5,10,5);
             holder.itemHolder.setLayoutParams(params);
@@ -90,6 +92,18 @@ public class TablesResViewAdapter extends RecyclerView.Adapter<TablesResViewAdap
                 holder.edtTxtAddNew.setText("");
             });
         }
+        removeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeCL.setVisibility(View.GONE);
+            }
+        });
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeCL.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
